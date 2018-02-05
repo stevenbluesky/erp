@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>退货订单管理</title>
+<link rel="stylesheet" type="text/css" href="ui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="ui/themes/icon.css">
+<link rel="stylesheet" type="text/css" href="css/table.css">
+<script type="text/javascript" src="ui/jquery.min.js"></script>
+<script type="text/javascript" src="ui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="ui/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="ui/jquery.serializejson.min.js"></script>
+<script type="text/javascript" src="ui/date.js"></script>
+<script type="text/javascript" src="js/request.js"></script>
+<script type="text/javascript" src="js/download.js"></script>
+<script type="text/javascript" src="js/retorders.js"></script>
+<script type="text/javascript" src="js/order_return.js"></script>
+<script type="text/javascript">
+
+</script>
+</head>
+<body>
+<div class="easyui-panel" style="padding-left:4px;border-bottom:0px;">
+	<div style="height:2px;"></div>
+	<form id="searchForm">
+	原订单编号：<input name="t1.ordersuuid" >
+	退货订单编号：<input name="t1.uuid" >
+	结束日期：<input name="t1.endtime" class="easyui-datebox">
+	库管员：<input name="t1.ender" class="easyui-combobox" data-options="url:'emp_list.action',valueField:'uuid',textField:'name'" >
+		<button type="button" id="btnSearch">查询</button>
+	<!-- <div id="statediv">状态：<input name="t1.state" value="">0:待审核 1:待入库 2:已完成 5:已驳回</div> -->
+	</form>
+	<div style="height:2px;"></div>
+</div>
+<table id="grid"></table>
+
+<div id="ordersDlg" style="padding:2px;">
+	<table class="hovertable">
+		<tr>
+			<td class="bg">流水号</td>
+			<td id="uuid"></td>
+			<td class="bg">供应商</td>
+			<td colspan="3" id="supplierName"></td>
+			<td class="bg">状态</td>
+			<td id="state"></td>
+		</tr>
+		<tr>
+			<td class="bg" width="10%">下单人</td>
+			<td width="15%" id="createrName"></td>
+			<td class="bg" width="10%">审核人</td>
+			<td width="15%" id="checkerName"></td>
+			<td class="bg" width="10%"></td> 
+			<td width="15%" id="starterName"></td>
+			<td class="bg" width="10%">库管员</td>
+			<td width="15%" id="enderName"></td>
+		</tr>
+		<tr>
+			<td class="bg noBorderBottom">下单日期</td>
+			<td class="noBorderBottom" id="createtime"></td>
+			<td class="bg noBorderBottom">审核日期</td>
+			<td class="noBorderBottom" id="checktime"></td>
+			<td class="bg noBorderBottom"></td>
+			<td class="noBorderBottom" id="starttime"></td>
+			<td class="bg noBorderBottom">入库日期</td>
+			<td class="noBorderBottom" id="endtime"></td>
+		</tr>
+		<tr>
+			<td class="bg noBorderBottom">运单号</td>
+			<td class="noBorderBottom" id="waybillsn"></td>
+			<td class="bg noBorderBottom"></td>
+			<td class="noBorderBottom"></td>
+			<td class="bg noBorderBottom"></td>
+			<td class="noBorderBottom"></td>
+			<td class="bg noBorderBottom"></td>
+			<td class="noBorderBottom"></td>
+		</tr>
+	</table>
+	<!-- 明细列表 -->
+	<table id="itemgrid"></table>
+</div>
+<!-- 入库窗口 -->
+<div id="itemDlg" style="padding:2px;">
+	<form id="itemForm">
+		<!-- 明细的编号 -->
+		<input id="id" name="id" type="hidden">
+		<table class="hovertable">
+			<tr>
+				<td class="bg" width="30%">商品编号</td>
+				<td width="70%" id="goodsuuid"></td>
+			</tr>
+			<tr>
+				<td class="bg">商品名称</td>
+				<td id="goodsname"></td>
+			</tr>
+			<tr>
+				<td class="bg">数量</td>
+				<td id="num"></td>
+			</tr>
+			<tr>
+				<td class="bg">仓库</td>
+				<td><input name="storeuuid" class="easyui-combobox" data-options="
+					url:'store_myList.action',textField:'name',valueField:'uuid'
+				"></td>
+			</tr>
+		</table>
+	</form>
+</div>
+<!-- 销售订单录入、退货登记窗口 -->
+
+<div id="addOrdersDlg" style="padding:2px;">
+<form id="orderForm">	
+原订单编号<input name="t.ordersuuid" id="ordersuuid" />
+	</form>	
+<div style="height:2px;"></div>	
+<table id="ordersgrid">
+</table>
+
+</div>
+<!-- 物流详情的窗口 -->
+<div id="waybillDetailDlg" style="padding:2px;">
+	<table id="waybilldetailGrid"></table>
+</div>
+</body>
+</html>

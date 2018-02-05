@@ -1,0 +1,9 @@
+com\redsun\bos\ws\Add.class
+com\redsun\bos\ws\impl\WaybillWsService.class
+com\redsun\bos\ws\WaybilldetailList.class
+com\redsun\bos\ws\impl\IWaybillWs.class
+com\redsun\bos\ws\AddResponse.class
+com\redsun\bos\ws\WaybilldetailListResponse.class
+com\redsun\bos\ws\Waybilldetail.class
+com\redsun\bos\ws\ObjectFactory.class
+com\redsun\bos\ws\package-info.class

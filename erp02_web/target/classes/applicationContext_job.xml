@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop.xsd
+		">   
+	<!-- 定义一个任务类 -->
+	<bean id="mailJob" class="cn.itcast.erp.biz.MailJob">
+		<property name="mailUtil" ref="mailUtil"></property>
+		<property name="storedetailBiz" ref="storedetailBiz"></property>
+		<property name="to" value="931854211@qq.com"></property>
+		<property name="subject" value="【Auto-Mail】库存预警_时间:[time]"></property>
+		<property name="text" value="亲!有[count]种商品已经库存不足，请登陆ERP系统查看~~~"></property>
+	</bean>
+	<!-- 任务类描述 -->
+	<bean id="jobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="mailJob"></property>
+		<property name="targetMethod" value="doJob"></property>
+		<!-- 去掉并发执行 -->
+		<property name="concurrent" value="false"></property>
+	</bean>
+	<!-- 触发器 -->
+	<bean id="jobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="jobDetail"></property>
+		<!-- 七子表达式 -->
+		<property name="cronExpression" value="0 * * * * ? 2019"></property>
+	</bean>
+	<!-- 任务调度管理容器 -->
+	<bean id="scheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean" >
+		<property name="triggers">
+			<list>
+				<ref bean="jobTrigger"/>
+			</list>
+		</property>
+		<!-- 跳过 新版本的检查 -->
+		<property name="quartzProperties"> 
+            <props>
+                <prop key="org.quartz.scheduler.skipUpdateCheck">true</prop> 
+            </props>
+        </property>
+	</bean>
+</beans>
+	

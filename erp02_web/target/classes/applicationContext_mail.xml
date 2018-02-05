@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop.xsd
+		">   
+	<!-- 邮件发送器 -->
+	<bean id="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<!-- 服务器 -->
+		<property name="host" value="smtp.qq.com"></property>
+		<!-- 端口 -->
+		<property name="port" value="465"></property>
+		<!-- 发送邮件协议 -->
+		<property name="protocol" value="smtp"></property>
+		<!-- 登录用户名 -->
+		<property name="username" value="991705931@qq.com"></property>
+		<!-- 密码 -->
+		<property name="password" value="ueiakzgcmmrrbcge"></property>
+		<property name="javaMailProperties">
+			<props>
+				<!-- 需要验证发件人 -->
+				<prop key="mail.smtps.auth">true</prop>
+				<!-- 开启ssl协议加密码 -->
+				<prop key="mail.smtp.ssl.enable">true</prop>
+			</props>
+		</property>
+	</bean>
+	<!-- 邮件工具类 -->
+	<bean id="mailUtil" class="cn.itcast.erp.biz.MailUtil">
+		<property name="sender" ref="javaMailSender"></property>
+		<property name="from" value="991705931@qq.com"></property>
+	</bean>
+</beans>
+	
